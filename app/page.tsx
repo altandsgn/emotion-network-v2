@@ -19,6 +19,15 @@ const emotionColors = {
   surprise: '#FF6EC7'  // Neon Pink
 } as const;
 
+type EmotionType = keyof typeof emotionColors;
+
+const getEmotionColor = (emotion: string | undefined) => {
+  if (!emotion || !(emotion in emotionColors)) {
+    return emotionColors.sadness; // Default color
+  }
+  return emotionColors[emotion as EmotionType];
+};
+
 interface HoverState {
   footprint: Footprint | null;
 }
@@ -159,8 +168,8 @@ export default function Home() {
             />
           </div>
           <div className="flex items-center opacity-80 text-sm">
-            <PixelDot color={emotionColors[hoveredFootprint.emotion]} />
-            <span>Emotion: {hoveredFootprint.emotion}</span>
+            <PixelDot color={getEmotionColor(hoveredFootprint.emotion)} />
+            <span>Emotion: {hoveredFootprint.emotion || 'unknown'}</span>
           </div>
         </div>
       )}
