@@ -33,22 +33,29 @@ export async function POST(request: Request) {
       }
     });
 
-    // Send email notification
-    const mailOptions = {
-      from: process.env.SMTP_EMAIL,
-      to: process.env.RECIPIENT_EMAIL,
-      subject: 'New Footprint Submission',
-      html: `
-        <h2>New Footprint Submission</h2>
-        <p><strong>Message:</strong> ${message}</p>
-        <p><strong>Emotion:</strong> ${emotion}</p>
-        <p><strong>Location:</strong> ${location}</p>
-        <p><strong>Status:</strong> Pending</p>
-        <p><strong>Submitted at:</strong> ${new Date().toLocaleString()}</p>
-      `
-    };
+    // Try to send email notification, but don't fail if it errors
+    try {
+      if (process.env.SMTP_EMAIL && process.env.SMTP_PASSWORD && process.env.RECIPIENT_EMAIL) {
+        const mailOptions = {
+          from: process.env.SMTP_EMAIL,
+          to: process.env.RECIPIENT_EMAIL,
+          subject: 'New Footprint Submission',
+          html: `
+            <h2>New Footprint Submission</h2>
+            <p><strong>Message:</strong> ${message}</p>
+            <p><strong>Emotion:</strong> ${emotion}</p>
+            <p><strong>Location:</strong> ${location}</p>
+            <p><strong>Status:</strong> Pending</p>
+            <p><strong>Submitted at:</strong> ${new Date().toLocaleString()}</p>
+          `
+        };
 
-    await transporter.sendMail(mailOptions);
+        await transporter.sendMail(mailOptions);
+      }
+    } catch (emailError) {
+      // Log email error but don't fail the submission
+      console.error('Error sending email notification:', emailError);
+    }
 
     return NextResponse.json({ success: true, submission });
   } catch (error) {
