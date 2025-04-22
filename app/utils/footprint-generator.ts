@@ -1,4 +1,4 @@
-import { Footprint } from '@/types/footprint';
+import { Footprint } from '../types/footprint';
 
 const messages = [
   "Exploring the digital realm...",
