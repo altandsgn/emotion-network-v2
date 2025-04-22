@@ -69,6 +69,7 @@ export default function Submit() {
       <>
         <Navbar currentPath="/submit" />
         <div className="min-h-screen flex flex-col items-center justify-center p-4 cursor-none">
+          <PixelCursor />
           <div className="text-green-500 font-mono text-center max-w-lg">
             <TypewriterText
               text="It's out there now. Floating gently. Someone may find it, feel it, and know they're not alone."
