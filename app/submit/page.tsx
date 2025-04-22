@@ -52,7 +52,7 @@ export default function Submit() {
 
       const data = await response.json();
 
-      if (response.ok) {
+      if (response.ok && data.success) {
         setIsSubmitted(true);
       } else {
         setError(data.error || 'Failed to submit footprint');
