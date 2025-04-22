@@ -4,7 +4,16 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Emotion Network',
-  description: 'A Matrix-inspired interactive experience',
+  description: 'Emotion Network is an interactive web-based art platform visualising anonymous emotions through a collective digital space.',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+    other: {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/apple-touch-icon.png',
+    },
+  },
 }
 
 export default function RootLayout({
